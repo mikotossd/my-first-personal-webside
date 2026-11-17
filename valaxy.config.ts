@@ -164,7 +164,9 @@ export default defineValaxyConfig<UserThemeConfig>({
       },
       {
         name: 'Hyperflip',
-        url: '/hyperflip/',
+        // 该页面是 public/ 下的独立静态应用，不在 Vue Router 里；
+        // 用绝对地址让 AppLink 走整页跳转，避免客户端路由命中 404。
+        url: 'https://mikotossd.net/hyperflip/',
         icon: 'i-ri-play-circle-fill',
         color: '#007EF8'
       }
