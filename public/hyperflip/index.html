@@ -1,0 +1,1699 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+<title>FASTFUSION // HYPERFLIP · JAPANESE HYPERFLIP COMPILATION [OVER 200BPM]</title>
+<style>
+  /* ---------------- 全局变量与严格蓝白双色工程色板 ---------------- */
+  :root {
+    --bg-blue: #007EF8;
+    --deep-blue: #0058C4;
+    --dark-blue: #003F90;
+    --ice-white: #E6EEF6;
+    --pure-white: #FFFFFF;
+    --border-blue: 1px solid #007EF8;
+    --border-white: 1px solid #E6EEF6;
+    --glow-shadow: 0 0 15px rgba(255, 255, 255, 0.9), 0 0 30px rgba(230, 238, 246, 0.6);
+    --font-heading: "Impact", "Arial Black", "Inter", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+    --font-mono: "JetBrains Mono", "SF Mono", "Consolas", "Courier New", ui-monospace, monospace;
+    --font-sans: -apple-system, BlinkMacSystemFont, "Segoe UI", "PingFang SC", "Hiragino Sans GB", "Microsoft YaHei", sans-serif;
+  }
+
+  * {
+    box-sizing: border-box;
+    margin: 0;
+    padding: 0;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+
+  html, body {
+    width: 100vw;
+    height: 100vh;
+    overflow: hidden;
+    background-color: var(--bg-blue);
+    color: var(--ice-white);
+    font-family: var(--font-sans);
+    position: relative;
+    -webkit-font-smoothing: antialiased;
+  }
+
+  /* 45° 斜线阴影纹理块 */
+  .stripe-bg {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgba(230, 238, 246, 0.15),
+      rgba(230, 238, 246, 0.15) 3px,
+      transparent 3px,
+      transparent 6px
+    );
+  }
+
+  .stripe-bg-blue {
+    background-image: repeating-linear-gradient(
+      -45deg,
+      rgba(0, 126, 248, 0.2),
+      rgba(0, 126, 248, 0.2) 3px,
+      transparent 3px,
+      transparent 6px
+    );
+  }
+
+  /* ---------------- 全屏翻转 180° 容器 ---------------- */
+  #viewport-wrapper {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    transition: transform 0.65s cubic-bezier(0.19, 1, 0.22, 1);
+    transform-origin: center center;
+  }
+
+  body.flipped #viewport-wrapper {
+    transform: rotate(180deg);
+  }
+
+  /* 翻转激活提示栏与鼠标反转状态 */
+  #flip-status-bar {
+    position: fixed;
+    top: 10px;
+    left: 50%;
+    transform: translateX(-50%) translateY(-70px);
+    background: #FFFFFF;
+    color: var(--bg-blue);
+    padding: 8px 24px;
+    border-radius: 4px;
+    font-family: var(--font-mono);
+    font-weight: 800;
+    font-size: 13px;
+    letter-spacing: 0.12em;
+    z-index: 99999;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.35);
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    transition: transform 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    pointer-events: all;
+    border: 2px solid var(--deep-blue);
+  }
+
+  body.flipped #flip-status-bar {
+    transform: translateX(-50%) translateY(0);
+  }
+
+  #flip-status-bar button {
+    background: var(--bg-blue);
+    color: #FFFFFF;
+    border: none;
+    padding: 4px 12px;
+    font-family: var(--font-mono);
+    font-weight: 700;
+    font-size: 12px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: background 0.15s ease;
+  }
+
+  #flip-status-bar button:hover {
+    background: var(--deep-blue);
+  }
+
+  /* 反转虚拟鼠标指针 */
+  #inverted-cursor {
+    position: fixed;
+    width: 32px;
+    height: 32px;
+    pointer-events: none;
+    z-index: 1000000;
+    transform: translate(-50%, -50%);
+    display: none;
+    filter: drop-shadow(0 0 6px rgba(0, 126, 248, 0.8));
+  }
+
+  body.flipped {
+    cursor: none !important;
+  }
+  body.flipped * {
+    cursor: none !important;
+  }
+  body.flipped #inverted-cursor {
+    display: block;
+  }
+
+  /* ---------------- 顶部巨型天头 Top Header Banner ---------------- */
+  header.top-header {
+    height: 74px;
+    min-height: 74px;
+    background: var(--bg-blue);
+    border-bottom: 2px solid var(--ice-white);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 24px;
+    position: relative;
+    z-index: 20;
+  }
+
+  .header-left {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+  }
+
+  .header-title-main {
+    font-family: var(--font-heading);
+    font-size: 32px;
+    line-height: 1;
+    font-weight: 900;
+    letter-spacing: -0.02em;
+    font-style: italic;
+    color: var(--ice-white);
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+  }
+
+  .header-title-main .accent {
+    color: #FFFFFF;
+    text-shadow: 0 0 10px rgba(255, 255, 255, 0.7);
+  }
+
+  .header-subtitle {
+    font-family: var(--font-mono);
+    font-size: 11px;
+    letter-spacing: 0.14em;
+    color: rgba(230, 238, 246, 0.85);
+    margin-top: 5px;
+    text-transform: uppercase;
+  }
+
+  .header-right {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+  }
+
+  /* 右上角两个仿参考图效果器方框 */
+  .fx-box {
+    border: 1px solid var(--ice-white);
+    background: rgba(0, 126, 248, 0.6);
+    padding: 6px 14px;
+    position: relative;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    height: 48px;
+    transition: all 0.2s ease;
+  }
+
+  .fx-box::before, .fx-box::after {
+    content: '';
+    position: absolute;
+    width: 6px;
+    height: 6px;
+    border-color: #FFFFFF;
+    border-style: solid;
+  }
+  .fx-box::before {
+    top: -2px; left: -2px;
+    border-width: 2px 0 0 2px;
+  }
+  .fx-box::after {
+    bottom: -2px; right: -2px;
+    border-width: 0 2px 2px 0;
+  }
+
+  .fx-box:hover, .fx-box.active {
+    background: #FFFFFF;
+    color: var(--bg-blue);
+    box-shadow: var(--glow-shadow);
+  }
+
+  .fx-box:hover .fx-label, .fx-box.active .fx-label,
+  .fx-box:hover .fx-sub, .fx-box.active .fx-sub {
+    color: var(--bg-blue) !important;
+  }
+
+  .fx-box:hover svg, .fx-box.active svg {
+    stroke: var(--bg-blue) !important;
+    fill: var(--bg-blue) !important;
+  }
+
+  .fx-icon-wrap {
+    width: 32px;
+    height: 32px;
+    display: grid;
+    place-items: center;
+  }
+
+  .fx-content {
+    display: flex;
+    flex-direction: column;
+  }
+
+  .fx-label {
+    font-family: var(--font-heading);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.08em;
+    color: #FFFFFF;
+  }
+
+  .fx-sub {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(230, 238, 246, 0.8);
+    letter-spacing: 0.05em;
+  }
+
+  /* ---------------- 核心主工作区 Main Workspace ---------------- */
+  .main-workspace {
+    flex: 1;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+    height: calc(100vh - 74px);
+  }
+
+  /* ---------------- 左侧冰白声波轨道栏 Sidebar ---------------- */
+  aside.track-sidebar {
+    width: 320px;
+    min-width: 320px;
+    max-width: 320px;
+    background: var(--ice-white);
+    color: var(--bg-blue);
+    border-right: 2px solid var(--ice-white);
+    display: flex;
+    flex-direction: column;
+    position: relative;
+    z-index: 10;
+    box-shadow: 4px 0 24px rgba(0, 0, 0, 0.15);
+  }
+
+  .sidebar-header {
+    padding: 12px 16px;
+    border-bottom: 1px solid rgba(0, 126, 248, 0.3);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: #FFFFFF;
+  }
+
+  .sidebar-tag {
+    font-family: var(--font-heading);
+    font-size: 14px;
+    font-weight: 900;
+    letter-spacing: 0.08em;
+    color: var(--bg-blue);
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .unlock-counter {
+    font-family: var(--font-mono);
+    font-size: 12px;
+    font-weight: 700;
+    background: var(--bg-blue);
+    color: #FFFFFF;
+    padding: 2px 8px;
+    border-radius: 2px;
+    letter-spacing: 0.06em;
+  }
+
+  .tracklist-container {
+    flex: 1;
+    display: flex;
+    position: relative;
+    overflow: hidden;
+  }
+
+  /* 左侧边缘纵向高频波形 */
+  .sidebar-waveform {
+    width: 44px;
+    min-width: 44px;
+    background: rgba(0, 126, 248, 0.05);
+    border-right: 1px solid rgba(0, 126, 248, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    position: relative;
+    overflow: hidden;
+  }
+
+  .waveform-svg {
+    width: 34px;
+    height: 100%;
+  }
+
+  .waveform-bar {
+    transform-origin: center;
+    transition: transform 0.15s ease, opacity 0.15s ease;
+  }
+
+  /* 17 轨列表 */
+  .tracklist-scroll {
+    flex: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    padding: 6px 0;
+    scroll-behavior: smooth;
+  }
+
+  .tracklist-scroll::-webkit-scrollbar {
+    width: 4px;
+  }
+  .tracklist-scroll::-webkit-scrollbar-track {
+    background: rgba(0, 126, 248, 0.05);
+  }
+  .tracklist-scroll::-webkit-scrollbar-thumb {
+    background: var(--bg-blue);
+  }
+
+  .track-item {
+    padding: 7px 12px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    cursor: pointer;
+    border-bottom: 1px dashed rgba(0, 126, 248, 0.15);
+    transition: all 0.15s ease;
+    position: relative;
+  }
+
+  .track-item:hover, .track-item.highlighted {
+    background: var(--bg-blue);
+    color: #FFFFFF;
+    padding-left: 16px;
+  }
+
+  .track-item.active {
+    background: var(--dark-blue);
+    color: #FFFFFF;
+    font-weight: bold;
+    border-left: 4px solid #FFFFFF;
+  }
+
+  .track-item:hover .track-zone-badge, .track-item.highlighted .track-zone-badge {
+    background: #FFFFFF;
+    color: var(--bg-blue);
+  }
+
+  .track-num {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 800;
+    width: 24px;
+    letter-spacing: -0.02em;
+  }
+
+  .track-title {
+    flex: 1;
+    font-size: 11.5px;
+    line-height: 1.35;
+    white-space: nowrap;
+    overflow: hidden;
+    text-overflow: ellipsis;
+    font-weight: 600;
+  }
+
+  .track-zone-badge {
+    font-family: var(--font-mono);
+    font-size: 9.5px;
+    padding: 1px 5px;
+    background: rgba(0, 126, 248, 0.12);
+    color: var(--bg-blue);
+    font-weight: 700;
+    border-radius: 2px;
+  }
+
+  /* 下半部矢量印章区 */
+  .sidebar-footer-badges {
+    height: 120px;
+    min-height: 120px;
+    border-top: 2px solid rgba(0, 126, 248, 0.3);
+    padding: 8px 12px;
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    background: #FFFFFF;
+    position: relative;
+  }
+
+  .badge-row-top {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 8px;
+  }
+
+  .badge-stamp {
+    border: 1.5px solid var(--bg-blue);
+    padding: 4px 6px;
+    font-family: var(--font-heading);
+    font-size: 10.5px;
+    font-weight: 900;
+    line-height: 1.1;
+    text-align: center;
+    letter-spacing: 0.05em;
+    color: var(--bg-blue);
+    text-transform: uppercase;
+  }
+
+  .badge-circle {
+    width: 44px;
+    height: 44px;
+    border: 2px dashed var(--bg-blue);
+    border-radius: 50%;
+    display: grid;
+    place-items: center;
+    font-family: var(--font-mono);
+    font-size: 8px;
+    font-weight: 800;
+    text-align: center;
+    line-height: 1.05;
+    padding: 3px;
+  }
+
+  .badge-barcode-row {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    font-family: var(--font-mono);
+    font-size: 9px;
+    color: rgba(0, 126, 248, 0.8);
+  }
+
+  .fake-barcode {
+    height: 22px;
+    width: 140px;
+    background: repeating-linear-gradient(
+      90deg,
+      var(--bg-blue) 0px,
+      var(--bg-blue) 2px,
+      transparent 2px,
+      transparent 3px,
+      var(--bg-blue) 3px,
+      var(--bg-blue) 4px,
+      transparent 4px,
+      transparent 6px,
+      var(--bg-blue) 6px,
+      var(--bg-blue) 9px,
+      transparent 9px,
+      transparent 11px
+    );
+  }
+
+  /* ---------------- 中央主视觉画布 Center Stage ---------------- */
+  main.center-stage {
+    flex: 1;
+    position: relative;
+    background: var(--bg-blue);
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  /* 背景网格与大型装饰线 */
+  .bg-grid-layer {
+    position: absolute;
+    inset: 0;
+    pointer-events: none;
+    z-index: 1;
+    opacity: 0.35;
+    background-size: 40px 40px;
+    background-image: 
+      linear-gradient(to right, rgba(230, 238, 246, 0.2) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(230, 238, 246, 0.2) 1px, transparent 1px);
+  }
+
+  /* 右下角透视网格仿参考图 */
+  .perspective-grid {
+    position: absolute;
+    right: 20px;
+    bottom: 70px;
+    width: 160px;
+    height: 110px;
+    border: 1px solid rgba(230, 238, 246, 0.4);
+    pointer-events: none;
+    z-index: 1;
+    transform: perspective(180px) rotateX(45deg);
+    background-size: 16px 16px;
+    background-image:
+      linear-gradient(to right, rgba(230, 238, 246, 0.3) 1px, transparent 1px),
+      linear-gradient(to bottom, rgba(230, 238, 246, 0.3) 1px, transparent 1px);
+  }
+
+  /* 中央超宽 SVG 矢量视窗 */
+  .stage-canvas-wrap {
+    position: absolute;
+    inset: 0;
+    bottom: 60px;
+    z-index: 5;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+
+  #master-svg {
+    width: 100%;
+    height: 100%;
+    max-width: 100%;
+    max-height: 100%;
+    object-fit: contain;
+  }
+
+  /* SVG 内部可交互热区样式 */
+  .hotspot-group {
+    cursor: pointer;
+    transition: filter 0.2s ease, transform 0.2s ease;
+  }
+
+  .hotspot-group:hover, .hotspot-group.active {
+    filter: drop-shadow(0 0 12px #FFFFFF) drop-shadow(0 0 24px rgba(255, 255, 255, 0.8));
+  }
+
+  .hotspot-group:hover .hotspot-shape, .hotspot-group.active .hotspot-shape {
+    stroke: #FFFFFF !important;
+    stroke-width: 3.5px !important;
+    fill-opacity: 0.45 !important;
+  }
+
+  .hotspot-group:hover .hotspot-text, .hotspot-group.active .hotspot-text {
+    fill: #FFFFFF !important;
+    font-weight: 900 !important;
+  }
+
+  .hotspot-target-box {
+    opacity: 0;
+    transition: opacity 0.2s ease;
+  }
+  .hotspot-group:hover .hotspot-target-box, .hotspot-group.active .hotspot-target-box {
+    opacity: 1;
+  }
+
+  /* 底部固定翻转陷阱横条 #17 */
+  .stage-footer-trap {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    right: 0;
+    height: 60px;
+    background: rgba(0, 88, 196, 0.75);
+    border-top: 2px solid var(--ice-white);
+    backdrop-filter: blur(8px);
+    z-index: 15;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 30px;
+  }
+
+  .trap-banner-btn {
+    font-family: var(--font-heading);
+    font-size: 19px;
+    font-weight: 900;
+    letter-spacing: 0.05em;
+    color: #FFFFFF;
+    background: transparent;
+    border: none;
+    cursor: pointer;
+    display: flex;
+    align-items: center;
+    gap: 12px;
+    transition: all 0.2s ease;
+    padding: 8px 16px;
+    border: 1px dashed rgba(255, 255, 255, 0.5);
+  }
+
+  .trap-banner-btn:hover {
+    background: #FFFFFF;
+    color: var(--bg-blue);
+    box-shadow: var(--glow-shadow);
+    border-color: #FFFFFF;
+  }
+
+  .trap-banner-btn .arrow {
+    font-size: 24px;
+    transition: transform 0.2s ease;
+  }
+  .trap-banner-btn:hover .arrow {
+    transform: translateX(8px);
+  }
+
+  /* 倒置四连嘲讽文字，默认半透明微隐，翻转后成为正立主角 */
+  .trap-taunts {
+    font-family: var(--font-mono);
+    font-size: 13px;
+    font-weight: 800;
+    letter-spacing: 0.1em;
+    color: rgba(230, 238, 246, 0.45);
+    transform: rotate(180deg);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+
+  body.flipped .trap-taunts {
+    color: #FFFFFF;
+    text-shadow: 0 0 12px #FFFFFF, 0 0 20px rgba(255, 255, 255, 0.8);
+    font-size: 16px;
+    background: rgba(0, 63, 144, 0.8);
+    padding: 4px 14px;
+    border: 1px solid #FFFFFF;
+  }
+
+  /* ---------------- 右侧检视面板 Inspector HUD Modal / Drawer ---------------- */
+  #inspector-panel {
+    position: absolute;
+    top: 14px;
+    right: 14px;
+    bottom: 74px;
+    width: 480px;
+    max-width: calc(100vw - 360px);
+    background: var(--ice-white);
+    color: var(--bg-blue);
+    border: 2px solid #FFFFFF;
+    box-shadow: -8px 8px 30px rgba(0, 0, 0, 0.4);
+    z-index: 50;
+    display: flex;
+    flex-direction: column;
+    transform: translateX(520px);
+    transition: transform 0.35s cubic-bezier(0.16, 1, 0.3, 1);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  #inspector-panel.open {
+    transform: translateX(0);
+  }
+
+  .inspector-header {
+    height: 48px;
+    background: var(--bg-blue);
+    color: #FFFFFF;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+    border-bottom: 2px solid #FFFFFF;
+  }
+
+  .inspector-badge-group {
+    display: flex;
+    align-items: center;
+    gap: 10px;
+  }
+
+  .insp-track-id {
+    font-family: var(--font-mono);
+    font-size: 16px;
+    font-weight: 900;
+    background: #FFFFFF;
+    color: var(--bg-blue);
+    padding: 2px 8px;
+    border-radius: 2px;
+  }
+
+  .insp-zone-tag {
+    font-family: var(--font-heading);
+    font-size: 11px;
+    letter-spacing: 0.08em;
+    color: var(--ice-white);
+  }
+
+  .inspector-close-btn {
+    background: transparent;
+    border: 1px solid #FFFFFF;
+    color: #FFFFFF;
+    font-family: var(--font-mono);
+    font-size: 14px;
+    font-weight: 800;
+    width: 28px;
+    height: 28px;
+    display: grid;
+    place-items: center;
+    cursor: pointer;
+    transition: all 0.15s ease;
+  }
+
+  .inspector-close-btn:hover {
+    background: #FFFFFF;
+    color: var(--bg-blue);
+  }
+
+  .inspector-body {
+    flex: 1;
+    overflow-y: auto;
+    padding: 16px;
+    display: flex;
+    flex-direction: column;
+    gap: 14px;
+  }
+
+  .inspector-body::-webkit-scrollbar {
+    width: 5px;
+  }
+  .inspector-body::-webkit-scrollbar-thumb {
+    background: var(--bg-blue);
+  }
+
+  .insp-title {
+    font-family: var(--font-heading);
+    font-size: 18px;
+    font-weight: 800;
+    line-height: 1.3;
+    color: var(--dark-blue);
+    border-left: 4px solid var(--bg-blue);
+    padding-left: 10px;
+  }
+
+  /* 手绘原稿切片视窗与切换开关 */
+  .crop-viewer-box {
+    background: #000;
+    border: 1.5px solid var(--bg-blue);
+    border-radius: 2px;
+    position: relative;
+    overflow: hidden;
+    display: flex;
+    flex-direction: column;
+  }
+
+  .crop-toolbar {
+    background: rgba(0, 126, 248, 0.15);
+    border-bottom: 1px solid var(--bg-blue);
+    padding: 6px 10px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
+
+  .crop-label {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    font-weight: 700;
+    color: var(--dark-blue);
+    text-transform: uppercase;
+  }
+
+  .filter-toggle-btn {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 800;
+    padding: 3px 10px;
+    border: 1px solid var(--bg-blue);
+    background: #FFFFFF;
+    color: var(--bg-blue);
+    cursor: pointer;
+    transition: all 0.15s ease;
+    border-radius: 2px;
+  }
+
+  .filter-toggle-btn:hover {
+    background: var(--bg-blue);
+    color: #FFFFFF;
+  }
+
+  .crop-img-wrap {
+    width: 100%;
+    min-height: 170px;
+    max-height: 220px;
+    background: #0B192C;
+    display: grid;
+    place-items: center;
+    position: relative;
+    overflow: hidden;
+    cursor: zoom-in;
+  }
+
+  .crop-img-wrap img {
+    max-width: 100%;
+    max-height: 220px;
+    object-fit: contain;
+    transition: filter 0.3s ease;
+  }
+
+  /* 蓝图滤镜 */
+  .crop-img-wrap.blueprint-mode img {
+    filter: invert(1) brightness(1.2) contrast(1.4) sepia(100%) hue-rotate(170deg) saturate(300%);
+  }
+
+  .crop-img-wrap::after {
+    content: "🔎 点击查看全图定位";
+    position: absolute;
+    right: 8px;
+    bottom: 8px;
+    background: rgba(0, 63, 144, 0.85);
+    color: #FFFFFF;
+    font-family: var(--font-mono);
+    font-size: 10px;
+    padding: 3px 8px;
+    border-radius: 2px;
+    pointer-events: none;
+  }
+
+  /* 手稿原文还原 RAW SOURCE */
+  .info-block {
+    display: flex;
+    flex-direction: column;
+    gap: 5px;
+  }
+
+  .block-label {
+    font-family: var(--font-mono);
+    font-size: 10.5px;
+    font-weight: 800;
+    color: var(--deep-blue);
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    display: flex;
+    align-items: center;
+    gap: 6px;
+  }
+
+  .block-label::before {
+    content: '//';
+    color: var(--bg-blue);
+  }
+
+  pre.raw-code {
+    background: #FFFFFF;
+    border: 1px solid rgba(0, 126, 248, 0.3);
+    border-left: 3px solid var(--bg-blue);
+    padding: 8px 12px;
+    font-family: var(--font-mono);
+    font-size: 12px;
+    line-height: 1.5;
+    color: var(--dark-blue);
+    white-space: pre-wrap;
+    word-break: break-all;
+    border-radius: 2px;
+  }
+
+  .popup-callout {
+    background: #FFFFFF;
+    border: 1px solid var(--bg-blue);
+    border-left: 4px solid var(--bg-blue);
+    padding: 10px 12px;
+    font-size: 12.5px;
+    line-height: 1.6;
+    color: #1A365D;
+    border-radius: 2px;
+    font-weight: 500;
+  }
+
+  .analysis-text {
+    font-size: 12.5px;
+    line-height: 1.65;
+    color: #2D3748;
+    background: rgba(255, 255, 255, 0.6);
+    padding: 8px 10px;
+    border-radius: 2px;
+    border: 1px solid rgba(0, 126, 248, 0.15);
+  }
+
+  /* 底部切歌式导航 */
+  .inspector-footer {
+    height: 48px;
+    background: #FFFFFF;
+    border-top: 2px solid rgba(0, 126, 248, 0.2);
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    padding: 0 16px;
+  }
+
+  .nav-btn {
+    background: transparent;
+    border: 1.5px solid var(--bg-blue);
+    color: var(--bg-blue);
+    font-family: var(--font-mono);
+    font-size: 11px;
+    font-weight: 800;
+    padding: 6px 14px;
+    cursor: pointer;
+    border-radius: 2px;
+    transition: all 0.15s ease;
+  }
+
+  .nav-btn:hover {
+    background: var(--bg-blue);
+    color: #FFFFFF;
+  }
+
+  .keyboard-hints {
+    font-family: var(--font-mono);
+    font-size: 10px;
+    color: rgba(0, 126, 248, 0.7);
+  }
+
+  /* ---------------- 全图放大定位 Modal ---------------- */
+  #full-photo-modal {
+    position: fixed;
+    inset: 0;
+    z-index: 99999;
+    background: rgba(0, 20, 60, 0.88);
+    backdrop-filter: blur(6px);
+    display: none;
+    place-items: center;
+    padding: 20px;
+  }
+
+  #full-photo-modal.active {
+    display: grid;
+  }
+
+  .full-modal-card {
+    background: var(--ice-white);
+    border: 2px solid #FFFFFF;
+    max-width: 90vw;
+    max-height: 90vh;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 0 20px 60px rgba(0,0,0,0.6);
+    border-radius: 4px;
+    overflow: hidden;
+  }
+
+  .full-modal-head {
+    background: var(--bg-blue);
+    color: #FFFFFF;
+    padding: 10px 16px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-family: var(--font-heading);
+    font-size: 14px;
+  }
+
+  .full-modal-img-wrap {
+    position: relative;
+    overflow: auto;
+    max-height: calc(90vh - 50px);
+    background: #111;
+  }
+
+  .full-modal-img-wrap img {
+    display: block;
+    max-width: 100%;
+    height: auto;
+  }
+
+  .full-highlight-box {
+    position: absolute;
+    border: 3px solid #FFFFFF;
+    background: rgba(0, 126, 248, 0.35);
+    box-shadow: 0 0 20px #FFFFFF;
+    pointer-events: none;
+    transition: all 0.2s ease;
+  }
+</style>
+</head>
+<body>
+
+<!-- 自定义反转鼠标指针 -->
+<svg id="inverted-cursor" viewBox="0 0 32 32" fill="none" xmlns="http://www.w3.org/2000/svg">
+  <polygon points="4,4 12,28 16,18 26,16" fill="#FFFFFF" stroke="#007EF8" stroke-width="2"/>
+  <line x1="16" y1="16" x2="28" y2="28" stroke="#007EF8" stroke-width="2.5"/>
+  <circle cx="16" cy="16" r="3" fill="#007EF8"/>
+</svg>
+
+<!-- 翻转状态恢复悬浮条 -->
+<div id="flip-status-bar">
+  <span>⚠ HORIZONTAL FLIP ENGAGED // MOUSE INVERTED</span>
+  <button id="restore-flip-btn" onclick="restoreFlip()">[ RESTORE / ESC ]</button>
+</div>
+
+<!-- 整体视窗容器（执行 180° 翻转） -->
+<div id="viewport-wrapper">
+
+  <!-- 顶部巨型天头 Top Header Banner -->
+  <header class="top-header">
+    <div class="header-left">
+      <div class="header-title-main">
+        HYPERFLIP <span class="accent">//</span> MARK IT DOWN
+      </div>
+      <div class="header-subtitle">
+        HAND-DRAWN MARKDOWN ENGINE / DARIACORE COMPILATION [OVER 200BPM] / 17 HIDDEN TRACKS
+      </div>
+    </div>
+
+    <div class="header-right">
+      <!-- 仿参考图效果器方框 1：COMPRESSION (触发 #12 SOS) -->
+      <div class="fx-box" id="fx-compression" onclick="selectTrack(12)" title="点击展开 #12 摩斯电码 SOS">
+        <div class="fx-icon-wrap">
+          <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="#FFFFFF" stroke-width="2">
+            <path d="M2 12 C 6 4, 10 20, 14 12 C 18 4, 22 20, 24 12"/>
+          </svg>
+        </div>
+        <div class="fx-content">
+          <div class="fx-label">COMPRESSION</div>
+          <div class="fx-sub">[CW: ERR] · SOS</div>
+        </div>
+      </div>
+
+      <!-- 仿参考图效果器方框 2：DISTORTION / BIG BROTHER (触发 #16 老大哥眼睛) -->
+      <div class="fx-box" id="fx-distortion" onclick="selectTrack(16)" title="点击展开 #16 老大哥死角偷看眼睛">
+        <div class="fx-icon-wrap">
+          <!-- 手绘老大哥偷看的眼睛 SVG -->
+          <svg width="28" height="24" viewBox="0 0 32 24" fill="none" stroke="#FFFFFF" stroke-width="1.8">
+            <path d="M 2 12 Q 8 4 14 12 Q 8 20 2 12 Z"/>
+            <circle cx="8" cy="12" r="2.5" fill="#FFFFFF"/>
+            <path d="M 18 12 Q 24 4 30 12 Q 24 20 18 12 Z"/>
+            <circle cx="24" cy="12" r="2.5" fill="#FFFFFF"/>
+          </svg>
+        </div>
+        <div class="fx-content">
+          <div class="fx-label">DISTORTION</div>
+          <div class="fx-sub">[BIG BROTHER AT U]</div>
+        </div>
+      </div>
+    </div>
+  </header>
+
+  <!-- 核心主工作区 Main Workspace -->
+  <div class="main-workspace">
+
+    <!-- 左侧冰白声波轨道栏 Sidebar -->
+    <aside class="track-sidebar">
+      <div class="sidebar-header">
+        <div class="sidebar-tag">
+          <span>TRACKLIST // 01 - 17</span>
+        </div>
+        <div class="unlock-counter" id="unlock-badge">
+          UNLOCKED: 0 / 17
+        </div>
+      </div>
+
+      <div class="tracklist-container">
+        <!-- 纵向高频声波柱 -->
+        <div class="sidebar-waveform" id="sidebar-waveform">
+          <svg class="waveform-svg" viewBox="0 0 34 500" preserveAspectRatio="none" id="waveform-svg-el">
+            <!-- 由 JS 动态填充波形线条 -->
+          </svg>
+        </div>
+
+        <!-- 17 轨曲目单 -->
+        <div class="tracklist-scroll" id="tracklist-scroll">
+          <!-- 动态渲染 17 轨 -->
+        </div>
+      </div>
+
+      <!-- 下半部矢量印章区 -->
+      <div class="sidebar-footer-badges stripe-bg-blue">
+        <div class="badge-row-top">
+          <div class="badge-stamp">DARIACORE<br>NEVER DIE</div>
+          <div class="badge-circle">
+            FAST<br>200BPM<br>RAW
+          </div>
+          <div class="badge-stamp">MASHUP<br>♲ RECYCLE</div>
+        </div>
+        <div class="badge-barcode-row">
+          <div class="fake-barcode"></div>
+          <span>SPEC: 44.1kHz / 24-bit</span>
+        </div>
+      </div>
+    </aside>
+
+    <!-- 中央主视觉画布 Center Stage -->
+    <main class="center-stage">
+      <div class="bg-grid-layer"></div>
+      <div class="perspective-grid"></div>
+
+      <!-- 中央超精 SVG 矢量大画布 -->
+      <div class="stage-canvas-wrap">
+        <svg id="master-svg" viewBox="0 0 1023 770" preserveAspectRatio="xMidYMid meet">
+          <!-- 背景大型声波折线装饰 -->
+          <g opacity="0.25" stroke="#E6EEF6" stroke-width="1.5" fill="none">
+            <polyline points="0,220 120,220 140,160 160,280 180,180 200,240 230,220 400,220 420,140 440,300 470,220 700,220 730,120 760,320 800,220 1023,220" />
+            <polyline points="0,520 180,520 210,480 230,560 250,510 320,520 540,520 570,460 600,580 630,520 820,520 850,470 880,570 910,520 1023,520" />
+          </g>
+
+          <!-- ==================== #01: 左上角与左下角闭合代码块 '''MARK it DOWN! ==================== -->
+          <g id="hotspot-1" class="hotspot-group" data-id="1">
+            <!-- 左上角手写感标题 -->
+            <rect x="70" y="145" width="220" height="58" fill="#007EF8" stroke="#E6EEF6" stroke-width="1.5" stroke-dasharray="4 2" class="hotspot-shape" fill-opacity="0.1"/>
+            <text x="82" y="185" font-family="'Impact', 'Arial Black', sans-serif" font-size="28" fill="#E6EEF6" font-style="italic" class="hotspot-text">'''MARK it DOWN!</text>
+            <!-- 左下角闭合代码块 ''' -->
+            <rect x="70" y="418" width="55" height="36" fill="#007EF8" stroke="#E6EEF6" stroke-width="1.5" stroke-dasharray="4 2" class="hotspot-shape" fill-opacity="0.1"/>
+            <text x="80" y="445" font-family="'Impact', 'Arial Black', sans-serif" font-size="28" fill="#E6EEF6" class="hotspot-text">'''</text>
+            <!-- 连线虚线 -->
+            <line x1="82" y1="205" x2="82" y2="418" stroke="#E6EEF6" stroke-dasharray="2 3" opacity="0.6"/>
+            <!-- 目标框标记 -->
+            <text x="82" y="140" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #01 · 人肉 MARKDOWN 引擎]</text>
+          </g>
+
+          <!-- ==================== #05: 正中央复合主矢量 HYPERFLIP & Dariacore!!!!! ==================== -->
+          <g id="hotspot-5" class="hotspot-group" data-id="5">
+            <!-- 上方手写感 Dariacore!!!!!! 弧线/斜线文字 -->
+            <text x="140" y="215" font-family="'Impact', 'Arial Black', sans-serif" font-size="25" fill="#E6EEF6" letter-spacing="2" font-style="italic" class="hotspot-text">Dariacore!!!!!!</text>
+            
+            <!-- 巨型涂鸦字母主干 (镂空粗体) -->
+            <!-- H -->
+            <path d="M 125,240 L 148,240 L 148,270 L 165,270 L 165,240 L 188,240 L 188,325 L 165,325 L 165,290 L 148,290 L 148,325 L 125,325 Z" fill="#E6EEF6" class="hotspot-shape" fill-opacity="0.95"/>
+            <!-- Y -->
+            <path d="M 194,240 L 214,240 L 226,275 L 238,240 L 258,240 L 236,285 L 236,325 L 216,325 L 216,285 Z" fill="#E6EEF6" class="hotspot-shape" fill-opacity="0.95"/>
+            <!-- E -->
+            <path d="M 305,240 L 342,240 L 342,260 L 325,260 L 325,272 L 339,272 L 339,290 L 325,290 L 325,305 L 344,305 L 344,325 L 305,325 Z" fill="#E6EEF6" class="hotspot-shape" fill-opacity="0.95"/>
+            <!-- P -->
+            <path d="M 525,240 L 560,240 C 575,240 580,250 580,265 C 580,280 572,290 555,290 L 545,290 L 545,325 L 525,325 Z M 545,258 L 545,272 L 555,272 C 560,272 562,268 562,265 C 562,261 560,258 555,258 Z" fill="#E6EEF6" class="hotspot-shape" fill-opacity="0.95"/>
+
+            <text x="130" y="348" font-family="'JetBrains Mono', monospace" font-size="12" fill="#FFFFFF" class="hotspot-target-box">[TRACK #05 · C位 HYPERFLIP &amp; DARIACORE]</text>
+          </g>
+
+          <!-- ==================== #02: 删除线贯穿实线与 ~~ 符号 ==================== -->
+          <g id="hotspot-2" class="hotspot-group" data-id="2">
+            <!-- 左侧 ~~ -->
+            <text x="65" y="285" font-family="'Impact', monospace" font-size="34" fill="#FFFFFF" font-weight="900" class="hotspot-text">~~</text>
+            <!-- 穿透中间的极粗横线 -->
+            <line x1="110" y1="280" x2="600" y2="280" stroke="#FFFFFF" stroke-width="7" stroke-linecap="round" class="hotspot-shape"/>
+            <!-- 右侧 ~~ -->
+            <text x="608" y="285" font-family="'Impact', monospace" font-size="34" fill="#FFFFFF" font-weight="900" class="hotspot-text">~~</text>
+            <text x="260" y="270" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #02 · 手绘删除线语法 ~~STRIKE~~]</text>
+          </g>
+
+          <!-- ==================== #09: P 字母延伸 = mgh AP 物理惨案 ==================== -->
+          <g id="hotspot-9" class="hotspot-group" data-id="9">
+            <!-- 从 P 字母底部引出的连接线与公式 -->
+            <path d="M 265,325 L 265,365 L 230,365" fill="none" stroke="#FFFFFF" stroke-width="2.5" class="hotspot-shape"/>
+            <!-- 字母 P 轮廓 -->
+            <path d="M 252,240 L 285,240 C 298,240 304,250 304,265 C 304,280 296,290 282,290 L 272,290 L 272,325 L 252,325 Z M 272,258 L 272,272 L 282,272 C 286,272 288,268 288,265 C 288,261 286,258 282,258 Z" fill="#E6EEF6" class="hotspot-shape" fill-opacity="0.95"/>
+            <text x="210" y="385" font-family="'JetBrains Mono', monospace" font-size="20" fill="#E6EEF6" font-weight="bold" class="hotspot-text">= mgh</text>
+            <text x="180" y="405" font-family="'JetBrains Mono', monospace" font-size="11" fill="#E6EEF6" class="hotspot-text">AP Physics 1 score?</text>
+            <text x="180" y="420" font-family="'JetBrains Mono', monospace" font-size="10" fill="#FFFFFF" class="hotspot-target-box">[TRACK #09 · P=mgh? AP物理 1 分大保底]</text>
+          </g>
+
+          <!-- ==================== #10: 反写的 Я (玩具反斗城) ==================== -->
+          <g id="hotspot-10" class="hotspot-group" data-id="10">
+            <!-- 反向 R (Я) -->
+            <path d="M 390,240 L 360,240 C 348,240 342,250 342,265 C 342,278 350,288 365,288 L 375,288 L 350,325 L 372,325 L 394,292 L 390,240 Z M 368,258 C 362,258 360,261 360,265 C 360,269 362,272 368,272 L 375,272 L 375,258 Z" fill="#E6EEF6" class="hotspot-shape" fill-opacity="0.95"/>
+            <!-- 下方小箭头与吐槽 -->
+            <path d="M 370,332 L 370,350 M 366,346 L 370,352 L 374,346" stroke="#FFFFFF" stroke-width="2" class="hotspot-shape"/>
+            <text x="340" y="366" font-family="'PingFang SC', sans-serif" font-size="12" fill="#E6EEF6" font-weight="bold" class="hotspot-text">呃… 玩具反斗城？</text>
+            <text x="330" y="235" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #10 · 翻转字母 Я 撞脸 Toys"R"Us]</text>
+          </g>
+
+          <!-- ==================== #11: 微积分 ∫∫ 与 |solate ==================== -->
+          <g id="hotspot-11" class="hotspot-group" data-id="11">
+            <!-- 代替 f 的双重积分符号 ∫∫ -->
+            <text x="400" y="325" font-family="'Times New Roman', serif" font-size="82" font-style="italic" fill="#E6EEF6" font-weight="bold" class="hotspot-text">∫∫</text>
+            <!-- 旁边的小字 calculus -->
+            <text x="408" y="235" font-family="'JetBrains Mono', monospace" font-size="13" fill="#E6EEF6" font-weight="bold" class="hotspot-text">calculus</text>
+            <!-- 代替 l 的 |solate 绝对值/隔离变量 -->
+            <text x="465" y="325" font-family="'Impact', monospace" font-size="70" fill="#E6EEF6" class="hotspot-text">|</text>
+            <text x="475" y="270" font-family="'JetBrains Mono', monospace" font-size="14" fill="#E6EEF6" class="hotspot-text">solate</text>
+            <text x="385" y="195" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #11 · 微积分乱入 ∫∫ &amp; |solate]</text>
+          </g>
+
+          <!-- ==================== #12: 摩斯电码 SOS 与 303/110111 像素框 ==================== -->
+          <g id="hotspot-12" class="hotspot-group" data-id="12">
+            <!-- 顶上的 ... --- ... -->
+            <text x="495" y="180" font-family="'Impact', monospace" font-size="16" fill="#FFFFFF" letter-spacing="4" class="hotspot-text">... --- ...</text>
+            <text x="490" y="196" font-family="'JetBrains Mono', monospace" font-size="10" fill="#E6EEF6" class="hotspot-text">CW decoder: ERR</text>
+            <!-- 字母 i 头顶方框充当像素点 -->
+            <rect x="490" y="204" width="68" height="42" fill="#0058C4" stroke="#FFFFFF" stroke-width="2" class="hotspot-shape"/>
+            <text x="496" y="220" font-family="'JetBrains Mono', monospace" font-size="12" fill="#FFFFFF" font-weight="bold" class="hotspot-text">303</text>
+            <text x="496" y="238" font-family="'JetBrains Mono', monospace" font-size="12" fill="#FFFFFF" font-weight="bold" class="hotspot-text">110111</text>
+            <!-- 字母 i 的竖线主体 -->
+            <rect x="506" y="258" width="16" height="67" fill="#E6EEF6" class="hotspot-shape"/>
+            <text x="562" y="235" font-family="'JetBrains Mono', monospace" font-size="12" fill="#E6EEF6" class="hotspot-text">Pixel</text>
+            <text x="480" y="165" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #12 · SOS 摩斯密码 &amp; 303像素点]</text>
+          </g>
+
+          <!-- ==================== 外围 HUD 触发节点 ==================== -->
+          <!-- #06: 右上声波节点 [CLOUD?] -->
+          <g id="hotspot-6" class="hotspot-group" data-id="6">
+            <rect x="660" y="150" width="160" height="74" rx="2" fill="#0058C4" stroke="#E6EEF6" stroke-width="1.5" class="hotspot-shape" fill-opacity="0.7"/>
+            <text x="672" y="172" font-family="'JetBrains Mono', monospace" font-size="12" fill="#FFFFFF" font-weight="bold" class="hotspot-text">CloudSound?</text>
+            <text x="672" y="192" font-family="'JetBrains Mono', monospace" font-size="12" fill="#FFFFFF" font-weight="bold" class="hotspot-text">SoundCloud?</text>
+            <text x="672" y="212" font-family="'JetBrains Mono', monospace" font-size="12" fill="#FFFFFF" font-weight="bold" class="hotspot-text">CloudMusic?</text>
+            <text x="660" y="142" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #06 · 大脑宕机 CloudSound?]</text>
+          </g>
+
+          <!-- #03: 中右引用节点 [> HYPERFLIP] -->
+          <g id="hotspot-3" class="hotspot-group" data-id="3">
+            <rect x="610" y="295" width="370" height="48" rx="2" fill="#003F90" stroke="#E6EEF6" stroke-width="1.5" class="hotspot-shape" fill-opacity="0.8"/>
+            <text x="622" y="313" font-family="'PingFang SC', sans-serif" font-size="10.5" fill="rgba(230,238,246,0.8)" class="hotspot-text">又称《你只是想当小众亚比男》</text>
+            <text x="622" y="333" font-family="'PingFang SC', sans-serif" font-size="13" fill="#FFFFFF" font-weight="bold" class="hotspot-text">&gt; 「HYPERFLIP」我的互联网生活不可能这么多彩！</text>
+            <text x="610" y="288" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #03 · Markdown 引用块 &amp; 俺妹体]</text>
+          </g>
+
+          <!-- #07: 中右故障节点 [DESTORY?] -->
+          <g id="hotspot-7" class="hotspot-group" data-id="7">
+            <rect x="610" y="358" width="370" height="52" rx="2" fill="#0058C4" stroke="#E6EEF6" stroke-width="1.5" stroke-dasharray="3 3" class="hotspot-shape" fill-opacity="0.75"/>
+            <text x="622" y="378" font-family="'JetBrains Mono', monospace" font-size="11.5" fill="#E6EEF6" class="hotspot-text">the power come from INTERNET,</text>
+            <text x="622" y="398" font-family="'JetBrains Mono', monospace" font-size="11.5" fill="#FFFFFF" font-weight="bold" class="hotspot-text">and it will destory ITSELF......?</text>
+            <text x="610" y="352" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #07 · 赛博哲学名言与拼写destory]</text>
+          </g>
+
+          <!-- #04: 右下加粗节点 [**Maybe**] -->
+          <g id="hotspot-4" class="hotspot-group" data-id="4">
+            <rect x="610" y="425" width="310" height="38" rx="2" fill="#003F90" stroke="#E6EEF6" stroke-width="1.5" class="hotspot-shape" fill-opacity="0.8"/>
+            <text x="622" y="450" font-family="'JetBrains Mono', monospace" font-size="13.5" fill="#FFFFFF" font-weight="bold" class="hotspot-text">**Maybe**...... but who is May?</text>
+            <text x="610" y="418" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #04 · Markdown **人肉加粗** 谐音梗]</text>
+          </g>
+
+          <!-- #08: 右下平行四边形警报框 [🚨 CALL 911!] -->
+          <g id="hotspot-8" class="hotspot-group" data-id="8">
+            <polygon points="630,480 970,480 950,575 610,575" fill="#0058C4" stroke="#FFFFFF" stroke-width="2" class="hotspot-shape" fill-opacity="0.85"/>
+            <text x="640" y="504" font-family="'JetBrains Mono', monospace" font-size="12" fill="#E6EEF6" class="hotspot-text">The First therom of hyperflip ↓</text>
+            <text x="635" y="528" font-family="'Impact', monospace" font-size="15" fill="#FFFFFF" letter-spacing="1" class="hotspot-text">FIRST CAR CRUSH</text>
+            <text x="630" y="558" font-family="'PingFang SC', sans-serif" font-size="15" fill="#FFFFFF" font-weight="900" class="hotspot-text">🚨 then 条子来啦！ CALL 911 !</text>
+            <text x="625" y="472" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #08 · 撞车与警笛采样圣经 therom]</text>
+          </g>
+
+          <!-- #16: 右上角死角 老大哥眼睛 -->
+          <g id="hotspot-16" class="hotspot-group" data-id="16">
+            <rect x="850" y="80" width="150" height="100" fill="#003F90" stroke="#FFFFFF" stroke-width="2" class="hotspot-shape" fill-opacity="0.85"/>
+            <!-- 两只偷看的大眼睛 -->
+            <path d="M 870 120 Q 890 95 910 120 Q 890 145 870 120 Z" fill="#FFFFFF" stroke="#007EF8" stroke-width="1.5"/>
+            <circle cx="890" cy="120" r="5" fill="#007EF8"/>
+            <path d="M 925 120 Q 945 95 965 120 Q 945 145 925 120 Z" fill="#FFFFFF" stroke="#007EF8" stroke-width="1.5"/>
+            <circle cx="945" cy="120" r="5" fill="#007EF8"/>
+            <text x="860" y="160" font-family="'Impact', monospace" font-size="12" fill="#FFFFFF" class="hotspot-text">BIG BROTHER IS</text>
+            <text x="860" y="174" font-family="'Impact', monospace" font-size="12" fill="#FFFFFF" class="hotspot-text">LOOKING AT U!</text>
+            <text x="840" y="72" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #16 · 1984 老大哥在看着你]</text>
+          </g>
+
+          <!-- 左下终端命令条 (紧凑单行 HUD，包含 #13, #14, #15) -->
+          <!-- #13: python hyperflip.py -->
+          <g id="hotspot-13" class="hotspot-group" data-id="13">
+            <rect x="70" y="480" width="460" height="42" fill="#003F90" stroke="#E6EEF6" stroke-width="1.5" class="hotspot-shape" fill-opacity="0.85"/>
+            <text x="82" y="506" font-family="'JetBrains Mono', monospace" font-size="13.5" fill="#FFFFFF" font-weight="bold" class="hotspot-text">E:\FolderForCodingAgent\ &gt; python hyperflip.py</text>
+            <text x="70" y="472" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #13 · Vibe Coder 本地开发路径]</text>
+          </g>
+
+          <!-- #14: claude code ban -->
+          <g id="hotspot-14" class="hotspot-group" data-id="14">
+            <rect x="70" y="530" width="490" height="48" fill="#0058C4" stroke="#FFFFFF" stroke-width="1.5" class="hotspot-shape" fill-opacity="0.9"/>
+            <text x="82" y="550" font-family="'JetBrains Mono', monospace" font-size="12" fill="#FFFFFF" font-weight="bold" class="hotspot-text">claude code &gt; : Your account has been ban</text>
+            <text x="82" y="568" font-family="'JetBrains Mono', monospace" font-size="11" fill="rgba(230,238,246,0.9)" class="hotspot-text">&gt; return : FakE rea1iTy! / Because Your R Chinese!</text>
+            <text x="70" y="525" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #14 · Claude Code 封号三连破防]</text>
+          </g>
+
+          <!-- #15: ip a & 1.1.1.1 cloudflare -->
+          <g id="hotspot-15" class="hotspot-group" data-id="15">
+            <rect x="70" y="586" width="380" height="42" fill="#003F90" stroke="#E6EEF6" stroke-width="1.5" class="hotspot-shape" fill-opacity="0.85"/>
+            <text x="82" y="605" font-family="'JetBrains Mono', monospace" font-size="12" fill="#FFFFFF" class="hotspot-text">&gt; ip a</text>
+            <text x="82" y="621" font-family="'JetBrains Mono', monospace" font-size="12" fill="#FFFFFF" font-weight="bold" class="hotspot-text">&gt; 1.1.1.1 oh is cloudflare!</text>
+            <text x="70" y="580" font-family="'JetBrains Mono', monospace" font-size="11" fill="#FFFFFF" class="hotspot-target-box">[TRACK #15 · 赛博精神分裂查 IP 破案]</text>
+          </g>
+
+        </svg>
+      </div>
+
+      <!-- 正底部直接显示的翻转陷阱横条 #17 -->
+      <footer class="stage-footer-trap" id="hotspot-17">
+        <button class="trap-banner-btn" onclick="toggleFlip(true); selectTrack(17);">
+          <span>DO NOT FLIP THIS PAGE HORIZONTALLY</span>
+          <span class="arrow">→</span>
+        </button>
+
+        <!-- 倒置四连嘲讽：翻转后成为正立高光主角 -->
+        <div class="trap-taunts" onclick="toggleFlip(true); selectTrack(17);" title="点击直接触发物理翻转嘲讽">
+          Why? / huh? / Why you do this? / R U boring? Nothing happen.
+        </div>
+      </footer>
+    </main>
+
+  </div><!-- end .main-workspace -->
+
+  <!-- 右侧工程检视抽屉面板 Blueprint Inspector HUD -->
+  <aside id="inspector-panel">
+    <div class="inspector-header">
+      <div class="inspector-badge-group">
+        <div class="insp-track-id" id="insp-id">TRACK #01</div>
+        <div class="insp-zone-tag" id="insp-zone">ZONE 1 // MARKDOWN</div>
+      </div>
+      <button class="inspector-close-btn" onclick="closeInspector()">✕</button>
+    </div>
+
+    <div class="inspector-body">
+      <div class="insp-title" id="insp-title">Title Here</div>
+
+      <!-- 手绘原稿切片视窗 -->
+      <div class="crop-viewer-box">
+        <div class="crop-toolbar">
+          <span class="crop-label" id="crop-label-text">ORIGINAL CROP · BLUEPRINT MODE</span>
+          <button class="filter-toggle-btn" id="filter-toggle-btn" onclick="toggleCropFilter()">
+            [ FILTER: BLUEPRINT ]
+          </button>
+        </div>
+        <div class="crop-img-wrap blueprint-mode" id="crop-wrap" onclick="openFullModal()">
+          <img id="crop-img" src="annotated/crops/01.png" alt="Handwritten crop">
+        </div>
+      </div>
+
+      <!-- 弹窗文案 POPUP CALLOUT -->
+      <div class="info-block">
+        <div class="block-label">POPUP REMARK // 吐槽解析</div>
+        <div class="popup-callout" id="insp-popup">Popup content</div>
+      </div>
+
+      <!-- 手稿原文还原 RAW SOURCE -->
+      <div class="info-block">
+        <div class="block-label">RAW SOURCE // 手稿文字还原</div>
+        <pre class="raw-code" id="insp-raw">Raw source code</pre>
+      </div>
+
+      <!-- 深度解析 ANALYSIS -->
+      <div class="info-block">
+        <div class="block-label">DEEP ANALYSIS // 亚文化背景解析</div>
+        <div class="analysis-text" id="insp-analysis">Analysis text</div>
+      </div>
+    </div>
+
+    <div class="inspector-footer">
+      <button class="nav-btn" onclick="navTrack(-1)">◀ PREV TRACK</button>
+      <div class="keyboard-hints">[ ◀ / ▶ KEYBOARD NAV ]</div>
+      <button class="nav-btn" onclick="navTrack(1)">NEXT TRACK ▶</button>
+    </div>
+  </aside>
+
+</div><!-- end #viewport-wrapper -->
+
+<!-- 全图放大并高亮定位 Modal -->
+<div id="full-photo-modal" onclick="closeFullModal(event)">
+  <div class="full-modal-card" onclick="event.stopPropagation()">
+    <div class="full-modal-head">
+      <span id="full-modal-title">HANDWRITTEN MANUSCRIPT · ROTATED VIEW</span>
+      <button class="inspector-close-btn" onclick="closeFullModal()">✕</button>
+    </div>
+    <div class="full-modal-img-wrap" id="full-modal-img-wrap">
+      <img src="annotated/hyperpilf-rotated.jpg" alt="Full manuscript rotated">
+      <div class="full-highlight-box" id="full-highlight-box"></div>
+    </div>
+  </div>
+</div>
+
+<script>
+  // 注入 17 个彩蛋完整结构化数据
+  const elementsData = [{"id": 1, "color": "#D62B4D", "zone": 1, "zone_name": "全局框架与「人肉 Markdown 引擎」", "title": "'''MARK it DOWN! 与左侧闭合的 '''", "area": "顶部左起（闭合符号在左侧中部）", "original_text": "'''MARK : DOWN!", "analysis": "用代码块符号 ''' 包裹上半页，同时玩了 Markdown（标记语言）和 Mark it down（把它记下来）的双关。它揭示了整页纸的终极秘密——这页纸其实是一个手绘版 Markdown 实时渲染器。", "popup": "[语法彩蛋] '''MARK it DOWN! —— 欢迎来到人类史上首个「手绘纸质版 Markdown 实时渲染引擎」。整页笔记同时保留了 Markdown 的源码符号与渲染后的物理视觉效果。", "bbox_rotated": {"x1": 78, "y1": 160, "x2": 278, "y2": 442, "w": 200, "h": 282}, "rects_rotated": [[94, 160, 278, 196], [78, 424, 102, 442]], "polygon_rotated": null, "badge_rotated": {"x": 58, "y": 138}, "bbox_original": {"x1": 327, "y1": 78, "x2": 609, "y2": 278, "w": 282, "h": 200}, "crop_file": "annotated/crops/01.png"}, {"id": 2, "color": "#D64D2B", "zone": 1, "zone_name": "全局框架与「人肉 Markdown 引擎」", "title": "~~ + 贯穿中间的横线 + ~~", "area": "正中央横跨", "original_text": "~~HYPERFLIP~~", "analysis": "HYPERFLIP 前后各有两个波浪号 ~~，中间一条实线直接穿透所有字母——这是 Markdown 删除线语法（~~删除线~~）的物理实现。", "popup": "[语法彩蛋] ~~HYPERFLIP~~ —— 别人写 Markdown 靠编辑器渲染，我写 Markdown 靠手绘物理拉线。前后双波浪号配手绘贯穿线，硬核还原删除线语法。", "bbox_rotated": {"x1": 70, "y1": 246, "x2": 644, "y2": 294, "w": 574, "h": 48}, "rects_rotated": null, "polygon_rotated": [[70, 262], [642, 246], [644, 276], [72, 294]], "badge_rotated": {"x": 50, "y": 250}, "bbox_original": {"x1": 475, "y1": 70, "x2": 523, "y2": 644, "w": 48, "h": 574}, "crop_file": "annotated/crops/02.png"}, {"id": 3, "color": "#C47A17", "zone": 1, "zone_name": "全局框架与「人肉 Markdown 引擎」", "title": ">「HYPERFLIP」我的互联网生活不可能这么多彩！", "area": "中部偏右", "original_text": "又称《你只是想当小众亚比男》\n> 「HYPERFLIP」我的互联网生活不可能这么多彩！", "analysis": "开头的 > 是 Markdown 的引用块（Blockquote）语法；正文恶搞了经典轻小说《我的妹妹哪有这么可爱！》的句式；上方小字「又称《你只是想当小众亚比男》」则是对亚文化（亚比）圈子的自嘲。", "popup": "[轻小说/语法彩蛋] Markdown 引用块（>）+ 经典「俺妹体」轻小说标题恶搞。上方附赠灵魂发问：「你今天又想搞什么亚比吗？」", "bbox_rotated": {"x1": 534, "y1": 292, "x2": 984, "y2": 356, "w": 450, "h": 64}, "rects_rotated": [[534, 310, 984, 356], [578, 292, 730, 320]], "polygon_rotated": null, "badge_rotated": {"x": 498, "y": 298}, "bbox_original": {"x1": 413, "y1": 534, "x2": 477, "y2": 984, "w": 64, "h": 450}, "crop_file": "annotated/crops/03.png"}, {"id": 4, "color": "#8A7A14", "zone": 1, "zone_name": "全局框架与「人肉 Markdown 引擎」", "title": "**Maybe**...... but who is May?", "area": "中下部偏右", "original_text": "**Maybe**…… but who is May?", "analysis": "前后加了 Markdown 的加粗语法 **，而且为了还原渲染效果，作者真的用笔把 Maybe 五个字母反复描黑加粗了！后半句则是把 Maybe 拆成「May be」的英文谐音冷笑话。", "popup": "[冷笑话/语法彩蛋] 注意看，**Maybe** 不仅带了 Markdown 加粗星号，连字迹都被人肉描粗了！至于「Who is May?」——建议去问问六月（June）。", "bbox_rotated": {"x1": 566, "y1": 428, "x2": 896, "y2": 482, "w": 330, "h": 54}, "rects_rotated": [[566, 428, 896, 482]], "polygon_rotated": null, "badge_rotated": {"x": 536, "y": 450}, "bbox_original": {"x1": 287, "y1": 566, "x2": 341, "y2": 896, "w": 54, "h": 330}, "crop_file": "annotated/crops/04.png"}, {"id": 5, "color": "#6E8C15", "zone": 2, "zone_name": "Dariacore / Hyperflip 电音亚文化圈", "title": "中央巨型涂鸦 HYPERFLIP & Dariacore!!!!!", "area": "正中央（C 位）", "original_text": "Dariacore!!!!!!\nHYPERFLIP", "analysis": "整页纸的绝对 C 位。Dariacore 是由 Jane Remover（化名 leroy）开创的高速、混乱采样的互联网电子乐微流派，后演化出 Hyperflip。", "popup": "[核心C位] Dariacore / Hyperflip —— 诞生于互联网深处的高速解构主义电子乐微流派，也是这页摸鱼手稿的精神图腾。", "bbox_rotated": {"x1": 120, "y1": 196, "x2": 580, "y2": 356, "w": 460, "h": 160}, "rects_rotated": [[120, 196, 580, 356]], "polygon_rotated": null, "badge_rotated": {"x": 88, "y": 188}, "bbox_original": {"x1": 413, "y1": 120, "x2": 573, "y2": 580, "w": 160, "h": 460}, "crop_file": "annotated/crops/05.png"}, {"id": 6, "color": "#5CA51C", "zone": 2, "zone_name": "Dariacore / Hyperflip 电音亚文化圈", "title": "CloudSound? SoundCloud? CloudMusic?", "area": "右上侧", "original_text": "CloudSound?\nSoundCloud?\nCloudMusic?", "analysis": "因为 Dariacore/Hyperflip 都在 SoundCloud（声云）上发布，而国内常在网易云音乐（CloudMusic）听搬运，写到这里大脑突然宕机，分不清到底叫 CloudSound 还是 SoundCloud。", "popup": "[大脑宕机现场] 当你同时混迹 SoundCloud 和网易云音乐（CloudMusic），摸鱼写字时就会触发这种排列组合式的失忆症。", "bbox_rotated": {"x1": 632, "y1": 156, "x2": 762, "y2": 270, "w": 130, "h": 114}, "rects_rotated": [[632, 156, 762, 270]], "polygon_rotated": null, "badge_rotated": {"x": 598, "y": 158}, "bbox_original": {"x1": 499, "y1": 632, "x2": 613, "y2": 762, "w": 114, "h": 130}, "crop_file": "annotated/crops/06.png"}, {"id": 7, "color": "#2FA51C", "zone": 2, "zone_name": "Dariacore / Hyperflip 电音亚文化圈", "title": "the power come from INTERNET, and it will destory ITSelf ...... ?", "area": "中部偏右", "original_text": "the power come from INTERNET,\nand it will destory ITSelf ...... ?", "analysis": "关于互联网亚文化「生于网络、终将自我解构毁灭」的中二哲学思考——但因为把 destroy 拼成了全球程序员最高频错字 destory，严肃感瞬间破功。", "popup": "[拼写彩蛋] 本来是一句极具赛博朋克感的互联网哲学名言，直到你发现 destroy 被拼成了祖传的 destory（故事感拉满）。", "bbox_rotated": {"x1": 582, "y1": 344, "x2": 922, "y2": 440, "w": 340, "h": 96}, "rects_rotated": [[582, 344, 922, 440]], "polygon_rotated": null, "badge_rotated": {"x": 542, "y": 338}, "bbox_original": {"x1": 329, "y1": 582, "x2": 425, "y2": 922, "w": 96, "h": 340}, "crop_file": "annotated/crops/07.png"}, {"id": 8, "color": "#1FA53A", "zone": 2, "zone_name": "Dariacore / Hyperflip 电音亚文化圈", "title": "The First therom of hyperflip ↓ + 平行四边形框", "area": "右下侧", "original_text": "The First therom of hyperflip ↓\nFirst Car Crush\nthen 🚨 条子来啦！ call 911！", "analysis": "致敬 Hyperflip 圈子最著名的圣经级采样梗「Car Crash and Siren（撞车与警笛声）」。作者不仅把 theorem 写成了 therom、Car Crash 写成了 Car Crush，还亲手画了一个极其抽象、神似汉字「撞」的发光警灯（🚨），配上一句美式译制片腔调的「条子来啦！」。", "popup": "[圈内圣经梗] 致敬 Hyperflip 标志性采样「Car Crash & Siren」！注：then 后面那个酷似走之底汉字的不明物体，其实是作者灵魂手绘的发光警灯 🚨。", "bbox_rotated": {"x1": 602, "y1": 440, "x2": 930, "y2": 598, "w": 328, "h": 158}, "rects_rotated": [[602, 440, 930, 598]], "polygon_rotated": null, "badge_rotated": {"x": 576, "y": 448}, "bbox_original": {"x1": 171, "y1": 602, "x2": 329, "y2": 930, "w": 158, "h": 328}, "crop_file": "annotated/crops/08.png"}, {"id": 9, "color": "#1FA56B", "zone": 3, "zone_name": "理科做题家与硬核无线电暗号", "title": "P = mgh? You get 1 score in AP Physics One?", "area": "中部偏左", "original_text": "= mgh\nP = mgh?\nYou get 1 score\nin AP Physics One?", "analysis": "借着 HYPERFLIP 的字母 P 强行接了个重力势能公式 = mgh，随后自己吐槽自己：重力势能明明是 U=mgh 或 Ep=mgh，写成 P=mgh 属于是在 AP 物理 1 考试里喜提 1 分（最低分大保底）的水平。", "popup": "[AP物理惨案] 强行借用字母 P 凑了个重力势能公式 P=mgh，然后开启自我嘲讽：势能用 P 表示，AP Physics 1 喜提 1 分大保底！", "bbox_rotated": {"x1": 190, "y1": 302, "x2": 340, "y2": 432, "w": 150, "h": 130}, "rects_rotated": [[190, 352, 340, 432], [238, 302, 322, 346]], "polygon_rotated": null, "badge_rotated": {"x": 166, "y": 350}, "bbox_original": {"x1": 337, "y1": 190, "x2": 467, "y2": 340, "w": 130, "h": 150}, "crop_file": "annotated/crops/09.png"}, {"id": 10, "color": "#1FB3AE", "zone": 3, "zone_name": "理科做题家与硬核无线电暗号", "title": "反写的 Я 与 ↓ 呃… 玩具反斗城？", "area": "正中偏左", "original_text": "Я\n↓\n呃……\n玩具反斗城？", "analysis": "本来想呼应 FLIP（翻转）把字母 R 反过来写成 Я，结果写完发现完美撞脸经典玩具品牌玩具反斗城（Toys \"R\" Us）Logo 里那个标志性的反写 Я。", "popup": "[童年乱入] 本想耍帅写个翻转的 R（Я）来呼应 Flip，写完定睛一看：坏了，成玩具反斗城（Toys \"R\" Us）形象大使了。", "bbox_rotated": {"x1": 332, "y1": 246, "x2": 436, "y2": 380, "w": 104, "h": 134}, "rects_rotated": [[344, 246, 398, 306], [332, 308, 436, 380]], "polygon_rotated": null, "badge_rotated": {"x": 308, "y": 248}, "bbox_original": {"x1": 389, "y1": 332, "x2": 523, "y2": 436, "w": 134, "h": 104}, "crop_file": "annotated/crops/10.png"}, {"id": 11, "color": "#2BABD6", "zone": 3, "zone_name": "理科做题家与硬核无线电暗号", "title": "calculus + ∫∫ + |solate", "area": "正中央", "original_text": "∫∫  calculus\n| solate", "analysis": "把 HYPERFLIP 里的 f 替换成了微积分积分号 ∫∫，把 l 替换成了绝对值／竖线符号 |，并顺手拼出 |solate（隔离变量）。", "popup": "[微积分乱入] 当微积分深入骨髓，看任何带弯钩的字母都像积分号 ∫，看任何竖线都想求绝对值并 isolate（分离变量）。", "bbox_rotated": {"x1": 348, "y1": 192, "x2": 556, "y2": 320, "w": 208, "h": 128}, "rects_rotated": [[348, 192, 428, 320], [460, 204, 556, 288]], "polygon_rotated": null, "badge_rotated": {"x": 314, "y": 198}, "bbox_original": {"x1": 449, "y1": 348, "x2": 577, "y2": 556, "w": 128, "h": 208}, "crop_file": "annotated/crops/11.png"}, {"id": 12, "color": "#2B72D6", "zone": 3, "zone_name": "理科做题家与硬核无线电暗号", "title": "... --- ... + cw decoder: ERR + [303 / 1110111] + Pixel", "area": "中上部偏右", "original_text": "... --- ...\nCW decoder: ERR\n┌ 303 ─────┐\n│ 110111   │\n└──────────┘\nPixel", "analysis": "方框顶上的三点、三划、三点（... --- ...）是标准的 SOS 摩斯电码；CW（Continuous Wave，等幅电报）是业余无线电圈（Ham）对摩斯电码通信的专业称呼。因为下面的方框（充当字母 i 的像素点 Pixel）里塞了不明所以的 303 和二进制 1110111，解码器直接报错 ERR。", "popup": "[无线电硬核彩蛋] 顶上是标准的摩斯电码 SOS（... --- ...），CW 是业余无线电中「等幅电报」的缩写。至于为什么解码报错 ERR？因为底下塞的是二进制 1110111！", "bbox_rotated": {"x1": 424, "y1": 136, "x2": 584, "y2": 272, "w": 160, "h": 136}, "rects_rotated": [[424, 136, 580, 244], [524, 240, 584, 272]], "polygon_rotated": null, "badge_rotated": {"x": 396, "y": 130}, "bbox_original": {"x1": 497, "y1": 424, "x2": 633, "y2": 584, "w": 136, "h": 160}, "crop_file": "annotated/crops/12.png"}, {"id": 13, "color": "#2B39D6", "zone": 4, "zone_name": "程序员与 Claude 封号血泪史", "title": "E:\\FolderForCodingAgent\\ > python hyperflip.py", "area": "左下侧", "original_text": "E:\\FolderForCodingAgent\\ > python hyperflip.py", "analysis": "极具真实感的本地开发路径——专门在 E 盘建了个放 AI Coding Agent 的文件夹。", "popup": "[Vibe Coder 日常] E:\\FolderForCodingAgent\\ —— 每个用 AI 写代码的程序员电脑里都有这么一个神秘文件夹。", "bbox_rotated": {"x1": 66, "y1": 476, "x2": 546, "y2": 532, "w": 480, "h": 56}, "rects_rotated": [[66, 476, 546, 532]], "polygon_rotated": null, "badge_rotated": {"x": 22, "y": 468}, "bbox_original": {"x1": 237, "y1": 66, "x2": 293, "y2": 546, "w": 56, "h": 480}, "crop_file": "annotated/crops/13.png"}, {"id": 14, "color": "#562BD6", "zone": 4, "zone_name": "程序员与 Claude 封号血泪史", "title": "claude code > : Your account has been ban 三连破防", "area": "左下侧", "original_text": "claude code > : Your account has been ban\nBecause Your R Chinese!\n> return : FakE rea1iTy!", "analysis": "还原了国内程序员使用 Anthropic 终端编程神器 Claude Code 时最痛的领悟——风控极严，动不动就封号（ban）。其中 FakE rea1iTy 采用了经典的黑客极客拼写法 LeetSpeak（用数字 1 代替字母 l）。", "popup": "[痛，太痛了] Claude Code 经典封号模拟器。那句用 LeetSpeak 写下的「FakE rea1iTy!」，凝聚了无数赛博难民的眼泪。", "bbox_rotated": {"x1": 200, "y1": 500, "x2": 806, "y2": 600, "w": 606, "h": 100}, "rects_rotated": [[200, 500, 806, 600]], "polygon_rotated": null, "badge_rotated": {"x": 158, "y": 498}, "bbox_original": {"x1": 169, "y1": 200, "x2": 269, "y2": 806, "w": 100, "h": 606}, "crop_file": "annotated/crops/14.png"}, {"id": 15, "color": "#8F2BD6", "zone": 4, "zone_name": "程序员与 Claude 封号血泪史", "title": "> ip a 与 > 1.1.1.1 ohis cloudflare!", "area": "左下部底端", "original_text": "> ip a\n> 1.1.1.1 ohis cloudflare!", "analysis": "号被封了之后条件反射查 IP。搞笑点在于：上面还是 Windows 的盘符 E:\\，查 IP 却敲了 Linux 专属命令 ip a；而且查出来的 1.1.1.1 是著名的 Cloudflare 公共 DNS / WARP 代理地址——破案了，挂着 Cloudflare WARP 免费代理用 Claude，不封你封谁！", "popup": "[赛博精神分裂] 在 Windows 的 E 盘路径下敲 Linux 的 ip a 命令，查出来个 1.1.1.1（Cloudflare 节点）——终于找到 Claude 被封号的罪魁祸首了！", "bbox_rotated": {"x1": 310, "y1": 594, "x2": 600, "y2": 664, "w": 290, "h": 70}, "rects_rotated": [[310, 594, 600, 664]], "polygon_rotated": null, "badge_rotated": {"x": 262, "y": 568}, "bbox_original": {"x1": 105, "y1": 310, "x2": 175, "y2": 600, "w": 70, "h": 290}, "crop_file": "annotated/crops/15.png"}, {"id": 16, "color": "#C82BD6", "zone": 5, "zone_name": "打破第四面墙的互动陷阱", "title": "右上角死角的眼睛 + 倒写 Big Brother is looking AT U!", "area": "右上角", "original_text": "BIG BROTHER\nis looking AT U!", "analysis": "致敬乔治·奥威尔反乌托邦名著《1984》中的经典台词「Big Brother is watching you」。躲在笔记本最角落偷偷盯人。", "popup": "[1984 彩蛋]「老大哥在看着你！」——躲在整页笔记最右上角的死角里暗中观察每一个偷看笔记的人。", "bbox_rotated": {"x1": 846, "y1": 112, "x2": 962, "y2": 246, "w": 116, "h": 134}, "rects_rotated": [[846, 112, 962, 246]], "polygon_rotated": null, "badge_rotated": {"x": 808, "y": 108}, "bbox_original": {"x1": 523, "y1": 846, "x2": 657, "y2": 962, "w": 134, "h": 116}, "crop_file": "annotated/crops/16.png"}, {"id": 17, "color": "#D62B9D", "zone": 5, "zone_name": "打破第四面墙的互动陷阱", "title": "Do not flip this page horizontally → 与倒置四连嘲讽", "area": "正底部", "original_text": "Do not flip this page horizontally →\n（倒置书写，翻转 180° 后读作）\nWhy? / huh?\nWhy you do this?\nR U boring? Nothing happen.", "analysis": "整页纸最绝的互动陷阱。作者预判了读者看到这句警告后一定会忍不住把本子（或手机/网页）倒过来看，于是提前用倒过来的字写好了四连嘲讽，还顺带把 Are you bored?（你很无聊吗）写成了人身攻击感拉满的 R U boring?（你这人是不是很无趣）。", "popup": "[第四面墙陷阱] 既然都写了「不要翻转」，你为什么还要点开看？R U boring?（点击下方按钮，体验物理翻转嘲讽！）", "bbox_rotated": {"x1": 420, "y1": 574, "x2": 844, "y2": 686, "w": 424, "h": 112}, "rects_rotated": [[548, 574, 844, 654], [420, 644, 730, 686]], "polygon_rotated": null, "badge_rotated": {"x": 556, "y": 554}, "bbox_original": {"x1": 83, "y1": 420, "x2": 195, "y2": 844, "w": 112, "h": 424}, "crop_file": "annotated/crops/17.png"}];
+
+  let currentTrackId = 1;
+  let isFlipped = false;
+  let isBlueprintFilter = true;
+  const unlockedTracks = new Set();
+
+  // 初始化左侧纵向高频声波柱
+  function initWaveform() {
+    const svgEl = document.getElementById('waveform-svg-el');
+    const totalLines = 60;
+    let html = '';
+    for (let i = 0; i < totalLines; i++) {
+      const y = 8 + i * 8;
+      const baseWidth = Math.sin(i * 0.35) * 10 + 12;
+      const x1 = 17 - baseWidth / 2;
+      const x2 = 17 + baseWidth / 2;
+      html += `<line class="waveform-bar" id="wb-${i}" x1="${x1}" y1="${y}" x2="${x2}" y2="${y}" stroke="#007EF8" stroke-width="2" stroke-linecap="round" opacity="0.65" />`;
+    }
+    svgEl.innerHTML = html;
+  }
+
+  // 动态更新声波振动
+  function pulseWaveform() {
+    const totalLines = 60;
+    for (let i = 0; i < totalLines; i++) {
+      const bar = document.getElementById(`wb-${i}`);
+      if (!bar) continue;
+      const randScale = (Math.random() * 1.6 + 0.4).toFixed(2);
+      bar.style.transform = `scaleX(${randScale})`;
+    }
+  }
+
+  // 渲染左侧 17 轨列表
+  function renderTracklist() {
+    const container = document.getElementById('tracklist-scroll');
+    container.innerHTML = elementsData.map(el => {
+      const padId = String(el.id).padStart(2, '0');
+      let tag = '[MD]';
+      if (el.zone === 2) tag = '[DARIA]';
+      else if (el.zone === 3) tag = '[STEM]';
+      else if (el.zone === 4) tag = '[CLI]';
+      else if (el.zone === 5) tag = '[TRAP]';
+
+      return `
+        <div class="track-item" id="track-item-${el.id}" 
+             onclick="selectTrack(${el.id})"
+             onmouseenter="highlightTrack(${el.id}, true)"
+             onmouseleave="highlightTrack(${el.id}, false)">
+          <span class="track-num">${padId}</span>
+          <span class="track-title" title="${el.title}">${el.title}</span>
+          <span class="track-zone-badge">${tag}</span>
+        </div>
+      `;
+    }).join('');
+  }
+
+  // 更新解锁进度
+  function updateUnlockBadge() {
+    document.getElementById('unlock-badge').textContent = `UNLOCKED: ${unlockedTracks.size} / 17`;
+  }
+
+  // 双向联动：悬停高亮
+  function highlightTrack(id, isHover) {
+    pulseWaveform();
+    const svgGroup = document.getElementById(`hotspot-${id}`);
+    const trackItem = document.getElementById(`track-item-${id}`);
+
+    if (svgGroup) {
+      if (isHover) svgGroup.classList.add('active');
+      else if (currentTrackId !== id) svgGroup.classList.remove('active');
+    }
+
+    if (trackItem) {
+      if (isHover) trackItem.classList.add('highlighted');
+      else trackItem.classList.remove('highlighted');
+    }
+  }
+
+  // 选择并激活曲目（打开右侧 Inspector）
+  function selectTrack(id) {
+    const el = elementsData.find(e => e.id === id);
+    if (!el) return;
+
+    currentTrackId = id;
+    unlockedTracks.add(id);
+    updateUnlockBadge();
+
+    // 更新列表激活状态
+    document.querySelectorAll('.track-item').forEach(item => item.classList.remove('active'));
+    const activeItem = document.getElementById(`track-item-${id}`);
+    if (activeItem) {
+      activeItem.classList.add('active');
+      activeItem.scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }
+
+    // 更新中央 SVG 热区状态
+    document.querySelectorAll('.hotspot-group').forEach(grp => grp.classList.remove('active'));
+    const activeSvg = document.getElementById(`hotspot-${id}`);
+    if (activeSvg) activeSvg.classList.add('active');
+
+    // 如果选中的是 12 或 16，高亮顶部 FX box
+    document.getElementById('fx-compression').classList.toggle('active', id === 12);
+    document.getElementById('fx-distortion').classList.toggle('active', id === 16);
+
+    // 填充 Inspector 面板数据
+    document.getElementById('insp-id').textContent = `TRACK #${String(el.id).padStart(2, '0')}`;
+    document.getElementById('insp-zone').textContent = `ZONE ${el.zone} // ${el.zone_name}`;
+    document.getElementById('insp-title').textContent = el.title;
+    document.getElementById('crop-img').src = el.crop_file;
+    document.getElementById('insp-popup').textContent = el.popup;
+    document.getElementById('insp-raw').textContent = el.original_text;
+    document.getElementById('insp-analysis').textContent = el.analysis;
+
+    // 滑出面板
+    document.getElementById('inspector-panel').classList.add('open');
+  }
+
+  function closeInspector() {
+    document.getElementById('inspector-panel').classList.remove('open');
+    document.querySelectorAll('.hotspot-group').forEach(grp => grp.classList.remove('active'));
+    document.querySelectorAll('.track-item').forEach(item => item.classList.remove('active'));
+  }
+
+  // 切歌导航
+  function navTrack(step) {
+    let nextId = currentTrackId + step;
+    if (nextId < 1) nextId = 17;
+    if (nextId > 17) nextId = 1;
+    selectTrack(nextId);
+  }
+
+  // 蓝图滤镜与原稿真切片切换
+  function toggleCropFilter() {
+    isBlueprintFilter = !isBlueprintFilter;
+    const wrap = document.getElementById('crop-wrap');
+    const btn = document.getElementById('filter-toggle-btn');
+    const label = document.getElementById('crop-label-text');
+
+    if (isBlueprintFilter) {
+      wrap.classList.add('blueprint-mode');
+      btn.textContent = '[ FILTER: BLUEPRINT ]';
+      label.textContent = 'ORIGINAL CROP · BLUEPRINT MODE';
+    } else {
+      wrap.classList.remove('blueprint-mode');
+      btn.textContent = '[ REAL PHOTO MODE ]';
+      label.textContent = 'ORIGINAL CROP · REAL PHOTO';
+    }
+  }
+
+  // 查看全图并在大图上高亮标注框
+  function openFullModal() {
+    const el = elementsData.find(e => e.id === currentTrackId);
+    if (!el || !el.bbox_rotated) return;
+
+    const modal = document.getElementById('full-photo-modal');
+    const box = document.getElementById('full-highlight-box');
+    const wrap = document.getElementById('full-modal-img-wrap');
+    const img = wrap.querySelector('img');
+
+    document.getElementById('full-modal-title').textContent = `TRACK #${String(el.id).padStart(2, '0')} · FULL VIEW LOCATOR`;
+
+    modal.classList.add('active');
+
+    // 计算缩放比例
+    setTimeout(() => {
+      const nw = img.naturalWidth || 1023;
+      const nh = img.naturalHeight || 770;
+      const cw = img.clientWidth;
+      const ch = img.clientHeight;
+
+      const scaleX = cw / nw;
+      const scaleY = ch / nh;
+
+      const bx = el.bbox_rotated.x1 * scaleX;
+      const by = el.bbox_rotated.y1 * scaleY;
+      const bw = el.bbox_rotated.w * scaleX;
+      const bh = el.bbox_rotated.h * scaleY;
+
+      box.style.left = `${bx}px`;
+      box.style.top = `${by}px`;
+      box.style.width = `${bw}px`;
+      box.style.height = `${bh}px`;
+    }, 60);
+  }
+
+  function closeFullModal(e) {
+    document.getElementById('full-photo-modal').classList.remove('active');
+  }
+
+  // =========================================================================
+  // #17 翻转与反转鼠标控制系统 Inverted Mouse Control
+  // =========================================================================
+  const cursor = document.getElementById('inverted-cursor');
+
+  function toggleFlip(forceState) {
+    if (typeof forceState === 'boolean') {
+      isFlipped = forceState;
+    } else {
+      isFlipped = !isFlipped;
+    }
+
+    if (isFlipped) {
+      document.body.classList.add('flipped');
+    } else {
+      document.body.classList.remove('flipped');
+    }
+  }
+
+  function restoreFlip() {
+    isFlipped = false;
+    document.body.classList.remove('flipped');
+  }
+
+  // 鼠标反转坐标追踪与事件模拟
+  let lastInvertedX = 0;
+  let lastInvertedY = 0;
+
+  window.addEventListener('mousemove', (e) => {
+    if (!isFlipped) return;
+
+    // 计算反转屏幕坐标 (左右对称、上下颠倒)
+    const invX = window.innerWidth - e.clientX;
+    const invY = window.innerHeight - e.clientY;
+    lastInvertedX = invX;
+    lastInvertedY = invY;
+
+    // 移动虚拟光标
+    cursor.style.left = `${invX}px`;
+    cursor.style.top = `${invY}px`;
+  });
+
+  // 拦截全局点击事件，当处于翻转状态时，重定向到反转坐标对应的真实元素
+  window.addEventListener('click', (e) => {
+    if (!isFlipped) return;
+
+    // 如果是程序触发的合成事件，放行
+    if (e.isSynthetic) return;
+
+    // 如果直接点击在恢复按钮上，优先放行恢复
+    if (e.target && (e.target.id === 'restore-flip-btn' || e.target.closest('#flip-status-bar'))) {
+      restoreFlip();
+      return;
+    }
+
+    e.preventDefault();
+    e.stopPropagation();
+
+    // 寻找反转坐标下的元素
+    cursor.style.display = 'none'; // 暂时隐藏光标避免 elementFromPoint 命中自己
+    const targetElement = document.elementFromPoint(lastInvertedX, lastInvertedY);
+    cursor.style.display = 'block';
+
+    if (targetElement) {
+      // 分发合成点击事件
+      const syntheticClick = new MouseEvent('click', {
+        bubbles: true,
+        cancelable: true,
+        view: window,
+        clientX: lastInvertedX,
+        clientY: lastInvertedY
+      });
+      syntheticClick.isSynthetic = true;
+      targetElement.dispatchEvent(syntheticClick);
+    }
+  }, true);
+
+  // 键盘快捷键监听：ESC 退出翻转，左右方向键切歌
+  window.addEventListener('keydown', (e) => {
+    if (e.key === 'Escape') {
+      restoreFlip();
+      closeInspector();
+      closeFullModal();
+    } else if (e.key === 'ArrowRight') {
+      navTrack(1);
+    } else if (e.key === 'ArrowLeft') {
+      navTrack(-1);
+    }
+  });
+
+  // 绑定 SVG 热区点击与悬停事件
+  function bindSvgHotspots() {
+    document.querySelectorAll('.hotspot-group').forEach(grp => {
+      const id = parseInt(grp.getAttribute('data-id'), 10);
+      grp.addEventListener('click', (e) => {
+        selectTrack(id);
+      });
+      grp.addEventListener('mouseenter', () => {
+        highlightTrack(id, true);
+      });
+      grp.addEventListener('mouseleave', () => {
+        highlightTrack(id, false);
+      });
+    });
+  }
+
+  // 页面自启动
+  window.addEventListener('DOMContentLoaded', () => {
+    initWaveform();
+    renderTracklist();
+    bindSvgHotspots();
+    setInterval(pulseWaveform, 800);
+  });
+</script>
+</body>
+</html>

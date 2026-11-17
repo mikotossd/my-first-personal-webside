@@ -154,6 +154,12 @@ export default defineValaxyConfig<UserThemeConfig>({
         url: '/map/',
         icon: 'i-ri-route-fill',
         color: '#2f7d5a'
+      },
+      {
+        name: 'Hyperflip',
+        url: '/hyperflip/',
+        icon: 'i-ri-play-circle-fill',
+        color: '#007EF8'
       }
     ],
 
