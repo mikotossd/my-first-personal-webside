@@ -5,7 +5,7 @@
   "packageManager": "pnpm@9.0.0",
   "scripts": {
     "dev": "valaxy",
-    "build": "valaxy build",
+    "build": "valaxy build --ssg && node scripts/fix-ssg-paths.mjs",
     "preview": "valaxy preview"
   },
   "dependencies": {

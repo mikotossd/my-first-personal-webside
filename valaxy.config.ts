@@ -3,6 +3,13 @@ import type { UserThemeConfig } from 'valaxy-theme-yun'
 
 // 更多配置参考: https://valaxy.site/guide/config
 export default defineValaxyConfig<UserThemeConfig>({
+  // SSG：预渲染每个路由为真实 HTML（nested 模式生成 /posts/xxx/index.html），
+  // 让爬虫与 AI 直接拿到 200 + 正文，而不是 SPA 空壳 + 404。
+  vite: {
+    ssgOptions: {
+      dirStyle: 'nested',
+    },
+  },
   // 站点配置
   siteConfig: {
     // 站点标题
